@@ -24,8 +24,7 @@
 		"experimentalDecorators": true,
 		"skipLibCheck": true,
 		"baseUrl": ".",
-		"rootDir": "."
+		"rootDir": "src"
 	},
-	"exclude": ["node_modules"],
-	"include": ["./src/**/*.tsx", "./src/**/*.ts"]
+	"exclude": ["node_modules"]
 }
