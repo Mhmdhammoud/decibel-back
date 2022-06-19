@@ -1,10 +1,18 @@
-import {Resolver, Mutation, Query} from 'type-graphql'
+import {RegistrationInput} from '../inputs'
+import {RegistrationResponse} from '../responses'
+import {RegistrationService} from '../services'
+import {Resolver, Mutation, Query, Arg} from 'type-graphql'
 
 @Resolver()
 class RegistrationResolver {
-	@Mutation(() => Boolean)
-	async addRegisteration() {
-		return true
+	constructor(private readonly registationService: RegistrationService) {
+		this.registationService = new RegistrationService()
+	}
+	@Mutation(() => RegistrationResponse)
+	async addRegisteration(
+		@Arg('input', () => RegistrationInput) input: RegistrationInput
+	): Promise<RegistrationResponse> {
+		return this.registationService.addRegisteration(input)
 	}
 	@Query(() => Boolean)
 	async exportData() {

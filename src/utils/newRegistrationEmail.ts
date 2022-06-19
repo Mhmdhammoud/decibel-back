@@ -2,16 +2,12 @@ import nodemailer from 'nodemailer'
 
 /**
  * @remarks
- *  Sends a notification email describing that a product has arrived
- * @param toEmail - The email of the recipient
- * @param text - The text to be sent
+ *  Sends a notification email about new registrations
  *
  * @returns void
  */
-const sendEmail = (toEmail: string[], text: string) => {
+const sendEmail = () => {
 	try {
-		const emailStrings = toEmail.join(', ')
-
 		const html = `<!DOCTYPE html>
         <html>
           <body>
@@ -168,7 +164,7 @@ const sendEmail = (toEmail: string[], text: string) => {
                                             <td>
                                               <a
                                                 role="button"
-                                                href="${text}"
+                                                href="#"
                                                 rel="noopener noreferrer"
                                                 target="_blank"
                                                 style="
@@ -211,13 +207,13 @@ const sendEmail = (toEmail: string[], text: string) => {
                                                   <br />
 
                                                   <a
-                                                    href="${text}"
+                                                    href="#"
                                                     style="
                                                       color: #1a57ad;
                                                       text-decoration: none;
                                                     "
                                                   >
-                                                    ${text}
+                                                   a
                                                   </a>
                                                   .
                                                 </p>
@@ -334,11 +330,11 @@ const sendEmail = (toEmail: string[], text: string) => {
 
 		// setup email data with unicode symbols
 		const mailOptions = {
-			from: `Mr Green <${process.env.EMAIL_USER}>`, // sender address
+			from: `Decibel <${process.env.EMAIL_USER}>`, // sender address
 			// to: `${emailStrings}`, // list of receivers
-			subject: 'Shop Restock', // Subject line
+			subject: 'New Registration', // Subject line
 			html: html, // html body,
-			bcc: `${emailStrings}`, // list of receivers
+			bcc: `${process.env.EMAIL_USER}`, // list of receivers
 		}
 
 		// send mail with defined transport object
