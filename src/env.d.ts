@@ -5,8 +5,8 @@ declare namespace NodeJS {
 		MONGO_URI: string
 		PRIVATE_KEY: string
 		PUBLIC_KEY: string
-		AWS_ACCESS_KEY_ID: string
-		AWS_SECRET_ACCESS_KEY: string
+		AWS_ACCESS_ID: string
+		AWS_SECRET: string
 		BUCKET_NAME: string
 		BUCKET_REGION: string
 		EMAIL_USER: string
