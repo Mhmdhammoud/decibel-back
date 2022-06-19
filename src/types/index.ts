@@ -1,13 +1,3 @@
 export type {IContext} from './IContext'
-export {
-	Alphabets,
-	UserType,
-	UserRole,
-	Sorting,
-	PaymentMethods,
-	OrderStatus,
-	DeliveryType,
-} from './enums'
+export {Alphabets, Sorting} from './enums'
 export type {IUpload} from './IUpload'
-export type {IRate} from './IGetRatesResponse'
-export * from './ICreateShipment'
