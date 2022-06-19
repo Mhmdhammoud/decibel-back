@@ -1,19 +1,7 @@
 import {AuthChecker} from 'type-graphql'
-import {IContext, UserRole} from '../types'
+import {IContext} from '../types'
 
-const authChecker: AuthChecker<IContext> = ({context}, roles) => {
-    if (!context.user) {
-        return false
-    }
-    if (roles.length === 0) {
-        return true
-    }
-    if (
-        context.user.role === UserRole.NORMAL &&
-        roles.includes('NORMAL')
-    ) {
-        return true
-    }
-    return context.user.role === UserRole.ADMIN && roles.includes('ADMIN')
+const authChecker: AuthChecker<IContext> = ({context}) => {
+	return !!context.user
 }
 export default authChecker
