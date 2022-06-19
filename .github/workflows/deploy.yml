@@ -1,0 +1,37 @@
+name: Deploy
+on:
+  push:
+    branches: [master]
+
+jobs:
+  type-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code.
+        uses: actions/checkout@v2
+      - name: Install Node. js.
+        uses: bahmutov/npm-install@v1
+        with:
+          node-version: '16.13.1'
+      - name: Install project dependencies.
+        run: yarn
+      - name: Run types test
+        run: yarn types
+  deploy:
+    needs: [type-check]
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Remote
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVTE_KEY }}
+          passphrase: ${{ secrets.passphrase }}
+          port: 22
+          script: |
+            cd ${{secrets.DIRECTORY}}
+            sudo git pull origin master
+            sudo yarn
+            sudo yarn build
+            sudo pm2 restart all
