@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk'
 import * as dotenv from 'dotenv'
+import Logger from './winston'
 
 dotenv.config()
 const bucket = process.env.BUCKET_NAME
@@ -14,7 +15,12 @@ const client = () => {
 			region,
 		})
 	} else {
-		console.error(`Error: AWS environment variables were not found`)
+		Logger.error(
+			'S3Client',
+			'client',
+			'AWS environment variables were not found',
+			'localhost'
+		)
 		process.exit(1)
 	}
 }
