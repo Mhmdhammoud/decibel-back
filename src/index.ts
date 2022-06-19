@@ -8,7 +8,7 @@ import {
 } from 'apollo-server-core'
 // import {IContext} from './types'
 import {ConnectDb, Logger} from './lib'
-import {createSchema, verifyJwt} from './utils'
+import {createSchema} from './utils'
 import {graphqlUploadExpress} from 'graphql-upload'
 // import {User} from './users'
 import {existsSync, mkdir} from 'fs'
