@@ -76,6 +76,18 @@ export class Registration {
 	@prop()
 	phone: string
 
+	@Field(() => Date, {nullable: true})
+	@prop({type: Date})
+	date_of_birth: Date
+
+	@Field(() => String, {nullable: true})
+	@prop()
+	nationality: String
+
+	@Field(() => String, {nullable: true})
+	@prop()
+	country_of_residence: String
+
 	@Field(() => Date)
 	createdAt: Date
 
