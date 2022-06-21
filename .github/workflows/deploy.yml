@@ -29,7 +29,11 @@ jobs:
         uses: bahmutov/npm-install@v1
         with:
           node-version: '16.13.1'
+      - name: Install project dependencies
+        run: yarn install
       - name: Testing GraphQL queries & mutations
+        env:
+          TEST_MONGO_URI: ${{secrets.TEST_MONGO_URI}}
         run: yarn test
   deploy:
     needs: [schema-testing]
