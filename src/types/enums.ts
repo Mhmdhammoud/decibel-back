@@ -9,3 +9,7 @@ export enum Sorting {
 	ASC = 'ASC',
 	DESC = 'DESC',
 }
+export enum RegistrantType{
+	STUDENT = 'STUDENT',
+	EMPLOYEE = 'EMPLOYEE',
+}

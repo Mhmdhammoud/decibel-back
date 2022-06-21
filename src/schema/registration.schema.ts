@@ -8,7 +8,7 @@ import {
 import {AsQueryMethod} from '@typegoose/typegoose/lib/types'
 import {IsEmail} from 'class-validator'
 import {Field, ID, ObjectType, registerEnumType} from 'type-graphql'
-import {Alphabets, Sorting} from '../types'
+import {Alphabets, RegistrantType, Sorting} from '../types'
 import {idGenerator} from '../utils'
 
 function findByRegistrationId(
@@ -32,6 +32,10 @@ interface QueryHelpers {
 
 registerEnumType(Sorting, {
 	name: 'Sorting',
+})
+
+registerEnumType(RegistrantType, {
+	name: 'RegistrantType',
 })
 
 @queryMethod(findByEmail)
@@ -72,21 +76,37 @@ export class Registration {
 		return `${this.fname} ${this.lname}`
 	}
 
-	@Field(() => String, {nullable: true})
+	@Field(() => String)
 	@prop()
 	phone: string
 
-	@Field(() => Date, {nullable: true})
+	@Field(() => Date)
 	@prop({type: Date})
 	date_of_birth: Date
 
-	@Field(() => String, {nullable: true})
+	@Field(() => String)
 	@prop()
 	nationality: String
 
-	@Field(() => String, {nullable: true})
+	@Field(() => String)
 	@prop()
 	country_of_residence: String
+
+	@Field(() => RegistrantType)
+	@prop({type: String})
+	registrant_type: RegistrantType
+
+	@Field(() => String, {nullable: true})
+	@prop()
+	university: string
+
+	@Field(() => String, {nullable: true})
+	@prop()
+	company_type: string
+
+	@Field(() => Boolean)
+	@prop({default: false})
+	status: boolean
 
 	@Field(() => Date)
 	createdAt: Date

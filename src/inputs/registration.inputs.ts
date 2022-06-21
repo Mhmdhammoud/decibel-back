@@ -1,5 +1,6 @@
 import {IsEmail} from 'class-validator'
 import {Field, InputType} from 'type-graphql'
+import {RegistrantType} from '../types'
 
 @InputType()
 export class RegistrationInput {
@@ -9,12 +10,8 @@ export class RegistrationInput {
 	@Field(() => String)
 	lname: string
 
-	@Field(() => String)
-	@IsEmail()
-	email: string
-
-	@Field(() => Date, {nullable: true})
-	date_of_birth: Date
+	@Field(() => String, {nullable: true})
+	phone: string
 
 	@Field(() => String, {nullable: true})
 	nationality: String
@@ -22,6 +19,19 @@ export class RegistrationInput {
 	@Field(() => String, {nullable: true})
 	country_of_residence: String
 
+	@Field(() => String)
+	@IsEmail()
+	email: string
+
+	@Field(() => Date, {nullable: true})
+	date_of_birth: Date
+
+	@Field(() => RegistrantType, {nullable: true})
+	registrant_type: RegistrantType
+
 	@Field(() => String, {nullable: true})
-	phone: string
+	university: string
+
+	@Field(() => String, {nullable: true})
+	company_type: string
 }
