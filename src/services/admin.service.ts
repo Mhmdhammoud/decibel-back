@@ -69,11 +69,7 @@ class AdminService {
 		const newAdmin = await AdminModel.create(input)
 		if (!newAdmin) {
 			return {
-				errors: [
-					{
-						...ErrorConstants['INTERNAL_SERVER_ERROR'],
-					},
-				],
+				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
 				token: null,
 			}
 		}

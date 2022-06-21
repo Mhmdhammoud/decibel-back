@@ -1,7 +1,11 @@
 import {RegistrationResponse, RegistrationsResponse} from '../responses'
 import {RegistrationInput} from '../inputs'
 import {RegistrationModel} from '../schema'
-import {newRegistrationEmail, paymentNeededEmail} from '../utils'
+import {
+	newRegistrationEmail,
+	paymentNeededEmail,
+	registrationActivatedEmail,
+} from '../utils'
 import {ErrorConstants} from '../constants'
 import {Sorting} from '../types'
 
@@ -12,23 +16,14 @@ class RegistrationService {
 		const isFound = await RegistrationModel.find().findByEmail(input.email)
 		if (isFound) {
 			return {
-				errors: [
-					{
-						field: 'email',
-						message: 'email already exists',
-					},
-				],
+				errors: [ErrorConstants['ADMIN_NOT_FOUND']],
 				registration: null,
 			}
 		}
 		const registration = await RegistrationModel.create(input)
 		if (!registration) {
 			return {
-				errors: [
-					{
-						...ErrorConstants['INTERNAL_SERVER_ERROR'],
-					},
-				],
+				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
 				registration: null,
 			}
 		}
@@ -45,17 +40,44 @@ class RegistrationService {
 		})
 		if (!registrations) {
 			return {
-				errors: [
-					{
-						...ErrorConstants['INTERNAL_SERVER_ERROR'],
-					},
-				],
+				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
 				registrations: null,
 			}
 		}
 		return {
 			errors: [],
 			registrations,
+		}
+	}
+	async activateRegistration(
+		registration_id: string
+	): Promise<RegistrationResponse> {
+		const registration = await RegistrationModel.findById(registration_id)
+		if (!registration) {
+			return {
+				errors: [ErrorConstants['REGISTRATION_NOT_FOUND']],
+				registration: null,
+			}
+		}
+		const updatedRegistration = await RegistrationModel.findByIdAndUpdate(
+			registration_id,
+			{
+				$set: {
+					status: true,
+				},
+			},
+			{new: true}
+		)
+		if (!updatedRegistration) {
+			return {
+				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
+				registration: null,
+			}
+		}
+		registrationActivatedEmail(registration.email)
+		return {
+			errors: [],
+			registration: updatedRegistration,
 		}
 	}
 }
