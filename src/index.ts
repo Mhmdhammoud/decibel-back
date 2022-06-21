@@ -2,10 +2,10 @@ import 'reflect-metadata'
 import {ApolloServer} from 'apollo-server-express'
 import express from 'express'
 import dotenv from 'dotenv'
-import {
-	ApolloServerPluginLandingPageGraphQLPlayground,
-	ApolloServerPluginLandingPageProductionDefault,
-} from 'apollo-server-core'
+// import {
+// 	ApolloServerPluginLandingPageGraphQLPlayground,
+// 	ApolloServerPluginLandingPageProductionDefault,
+// } from 'apollo-server-core'
 import {IContext} from './types'
 import {ConnectDb, Logger} from './lib'
 import {createSchema, verifyJwt} from './utils'
@@ -40,11 +40,12 @@ import {AUTHORIZATION_KEY} from './constants'
 			}
 			return context
 		},
-		plugins: [
-			process.env.NODE_ENV === 'production'
-				? ApolloServerPluginLandingPageProductionDefault()
-				: ApolloServerPluginLandingPageGraphQLPlayground(),
-		],
+		// plugins: [
+		// 	process.env.NODE_ENV === 'production'
+		// 		? ApolloServerPluginLandingPageProductionDefault()
+		// 		: ApolloServerPluginLandingPageGraphQLPlayground(),
+		// ],
+		// plugins: [ApolloServerPluginLandingPageProductionDefault()],
 	})
 	//40 Megabytes
 	app.use(graphqlUploadExpress({maxFileSize: 41943040}))

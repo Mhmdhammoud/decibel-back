@@ -66,13 +66,15 @@ class AdminService {
 			}
 		}
 
-		const newAdmin = await AdminModel.create(input)
-		if (!newAdmin) {
+		const admin_created = await AdminModel.create(input)
+		if (!admin_created) {
 			return {
 				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
 				token: null,
 			}
 		}
+		const newAdmin = await AdminModel.findById(admin_created._id).lean()
+		//@ts-ignore
 		const {password: dbPassword, ...rest} = newAdmin
 		return {
 			errors: [],
