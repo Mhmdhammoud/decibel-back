@@ -1,5 +1,5 @@
 import {RegistrationInput} from '../inputs'
-import {RegistrationResponse} from '../responses'
+import {RegistrationResponse, RegistrationsResponse} from '../responses'
 import {RegistrationService} from '../services'
 import {Resolver, Mutation, Query, Arg} from 'type-graphql'
 import {Sorting} from '../types'
@@ -15,8 +15,10 @@ class RegistrationResolver {
 	): Promise<RegistrationResponse> {
 		return this.registationService.addRegisteration(input)
 	}
-	@Query(() => Boolean)
-	async getAllRegistrations(@Arg('sorting', () => Sorting) sorting: Sorting) {
+	@Query(() => RegistrationsResponse)
+	async getAllRegistrations(
+		@Arg('sorting', () => Sorting) sorting: Sorting
+	): Promise<RegistrationsResponse> {
 		return this.registationService.getAllRegistrations(sorting)
 	}
 
