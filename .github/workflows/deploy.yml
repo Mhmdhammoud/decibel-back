@@ -16,6 +16,8 @@ jobs:
       - name: Install project dependencies.
         run: yarn
       - name: Run types test
+        env:
+          TEST_MONGO_URI: ${{secrets.TEST_MONGO_URI}}
         run: yarn types
   schema-testing:
     needs: [type-check]
