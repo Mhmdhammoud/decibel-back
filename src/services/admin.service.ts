@@ -5,6 +5,8 @@ import {signJwt} from '../utils'
 import {AdminResponse} from '../responses'
 import {LoginInput} from '../inputs'
 import {ErrorConstants} from '../constants'
+import {Logger} from '../lib'
+
 class AdminService {
 	async login(input: LoginInput): Promise<AuthResponse> {
 		const user = await AdminModel.find().findByEmail(input.email).lean()
@@ -45,41 +47,51 @@ class AdminService {
 			token: signJwt(rest),
 		}
 	}
+
 	async getAdmin(userId: string): Promise<AdminResponse> {
 		return {
 			errors: [],
 			admin: await AdminModel.find().findByAdminId(userId).lean(),
 		}
 	}
-	async createAdmin(input: LoginInput): Promise<AuthResponse> {
-		const {email} = input
-		const _verifyEmail = await AdminModel.find().findByEmail(email)
-		if (_verifyEmail) {
-			return {
-				errors: [
-					{
-						field: 'email',
-						message: 'Email already in use.',
-					},
-				],
-				token: null,
-			}
-		}
 
-		const admin_created = await AdminModel.create(input)
-		if (!admin_created) {
+	async createAdmin(input: LoginInput): Promise<AuthResponse> {
+		try {
+			const {email} = input
+			const _verifyEmail = await AdminModel.find().findByEmail(email)
+			if (_verifyEmail) {
+				return {
+					errors: [
+						{
+							field: 'email',
+							message: 'Email already in use.',
+						},
+					],
+					token: null,
+				}
+			}
+			const admin_created = await AdminModel.create(input)
+			if (!admin_created) {
+				return {
+					errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
+					token: null,
+				}
+			}
+			const newAdmin = await AdminModel.findById(admin_created._id).lean()
+			//@ts-ignore
+			const {password: dbPassword, ...rest} = newAdmin
+			return {
+				errors: [],
+				token: signJwt(rest),
+			}
+		} catch (error) {
+			Logger.error('admin service','createAdmin',error.message,'localhost',error)
 			return {
 				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
 				token: null,
 			}
 		}
-		const newAdmin = await AdminModel.findById(admin_created._id).lean()
-		//@ts-ignore
-		const {password: dbPassword, ...rest} = newAdmin
-		return {
-			errors: [],
-			token: signJwt(rest),
-		}
 	}
 }
+
 export default AdminService
