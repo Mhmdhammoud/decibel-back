@@ -1,7 +1,8 @@
-import {AddContactsResponse} from '../responses'
+import {AddContactsResponse, ContactsResponse} from '../responses'
 import {ErrorConstants} from '../constants'
 import {ContactModel} from '../schema'
 import {ContactInput} from '../inputs'
+import {Sorting} from '../types'
 
 class ContactService {
 	async addContact(input: ContactInput): Promise<AddContactsResponse> {
@@ -15,6 +16,21 @@ class ContactService {
 		return {
 			errors: [],
 			success: true,
+		}
+	}
+	async getAllContacts(sorting: Sorting): Promise<ContactsResponse> {
+		const contacts = await ContactModel.find().sort({
+			createdAt: sorting === Sorting.ASC ? 1 : -1,
+		})
+		if (!contacts) {
+			return {
+				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
+				contacts: null,
+			}
+		}
+		return {
+			errors: [],
+			contacts,
 		}
 	}
 }

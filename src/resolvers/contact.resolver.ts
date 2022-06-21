@@ -1,11 +1,7 @@
-import {ContactInput, RegistrationInput} from '../inputs'
-import {
-	AddContactsResponse,
-	RegistrationResponse,
-	RegistrationsResponse,
-} from '../responses'
-import {ContactService, RegistrationService} from '../services'
-import {Resolver, Mutation, Query, Arg, ID, Authorized} from 'type-graphql'
+import {Arg, Mutation, Query, Resolver} from 'type-graphql'
+import {ContactInput} from '../inputs'
+import {AddContactsResponse, ContactsResponse} from '../responses'
+import {ContactService} from '../services'
 import {Sorting} from '../types'
 
 @Resolver()
@@ -19,11 +15,11 @@ class ContactResolver {
 	): Promise<AddContactsResponse> {
 		return this.contactService.addContact(input)
 	}
-	@Query(() => RegistrationsResponse)
-	async getAllRegistrations(
+	@Query(() => ContactsResponse)
+	async getAllContacts(
 		@Arg('sorting', () => Sorting) sorting: Sorting
-	): Promise<RegistrationsResponse> {
-		return this.contactService.getAllRegistrations(sorting)
+	): Promise<ContactsResponse> {
+		return this.contactService.getAllContacts(sorting)
 	}
 }
 export default ContactResolver
