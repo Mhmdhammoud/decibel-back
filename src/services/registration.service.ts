@@ -1,7 +1,7 @@
 import {RegistrationResponse} from '../responses'
 import {RegistrationInput} from '../inputs'
 import {RegistrationModel} from '../schema'
-import {newRegistrationEmail} from '../utils'
+import {newRegistrationEmail, paymentNeededEmail} from '../utils'
 
 class RegistrationService {
 	async addRegisteration(
@@ -20,7 +20,20 @@ class RegistrationService {
 			}
 		}
 		const registration = await RegistrationModel.create(input)
+		if (!registration) {
+			return {
+				errors: [
+					{
+						field: 'Internal Server Error',
+						message:
+							'Something went wrong please contact system administrator.',
+					},
+				],
+				registration: null,
+			}
+		}
 		newRegistrationEmail()
+		paymentNeededEmail(registration.email)
 		return {
 			errors: [],
 			registration,

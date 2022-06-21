@@ -66,47 +66,10 @@ export class Registration {
 	@Field(() => String)
 	@prop({
 		required: true,
-		default: () => `registration_${idGenerator(Alphabets.ALPHANUMERIC, 4)}`,
+		default: () => `admin_${idGenerator(Alphabets.ALPHANUMERIC, 4)}`,
 		unique: true,
 	})
-	registration_id: string
-
-	@Field(() => String)
-	public get fullName() {
-		return `${this.fname} ${this.lname}`
-	}
-
-	@Field(() => String)
-	@prop()
-	phone: string
-
-	@Field(() => Date)
-	@prop({type: Date})
-	date_of_birth: Date
-
-	@Field(() => String)
-	@prop()
-	nationality: String
-
-	@Field(() => String)
-	@prop()
-	country_of_residence: String
-
-	@Field(() => RegistrantType)
-	@prop({type: String})
-	registrant_type: RegistrantType
-
-	@Field(() => String, {nullable: true})
-	@prop()
-	university: string
-
-	@Field(() => String, {nullable: true})
-	@prop()
-	company_type: string
-
-	@Field(() => Boolean)
-	@prop({default: false})
-	status: boolean
+	admin_id: string
 
 	@Field(() => Date)
 	createdAt: Date
