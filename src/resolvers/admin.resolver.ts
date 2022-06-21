@@ -4,6 +4,7 @@ import {Arg, Authorized, Ctx, Mutation, Query, Resolver} from 'type-graphql'
 import {AdminResponse} from '../responses'
 import {AdminService} from '../services'
 import {LoginInput} from '../inputs'
+import {ErrorConstants} from '../constants'
 
 @Resolver()
 class AdminResolver {
@@ -11,7 +12,7 @@ class AdminResolver {
 		this.adminService = new AdminService()
 	}
 	@Mutation(() => AuthResponse)
-	async addRegisteration(
+	async login(
 		@Arg('input', () => LoginInput) input: LoginInput
 	): Promise<AuthResponse> {
 		return this.adminService.login(input)
@@ -21,12 +22,7 @@ class AdminResolver {
 	async me(@Ctx() context: IContext): Promise<AdminResponse> {
 		if (!context.admin) {
 			return {
-				errors: [
-					{
-						field: 'Admin',
-						message: 'Admin not found',
-					},
-				],
+				errors: [ErrorConstants['ADMIN_NOT_FOUND']],
 				admin: null,
 			}
 		}
