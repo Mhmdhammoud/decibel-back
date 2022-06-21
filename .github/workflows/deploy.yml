@@ -34,6 +34,10 @@ jobs:
       - name: Testing GraphQL queries & mutations
         env:
           TEST_MONGO_URI: ${{secrets.TEST_MONGO_URI}}
+          BUCKET_NAME: ${{secrets.BUCKET_NAME}}
+          AWS_ACCESS_ID: ${{secrets.AWS_ACCESS_ID}}
+          AWS_SECRET: ${{secrets.AWS_SECRET}}
+          BUCKET_REGION: ${{secrets.BUCKET_REGION}}
         run: yarn test
   deploy:
     needs: [schema-testing]
