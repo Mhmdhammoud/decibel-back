@@ -24,7 +24,6 @@ describe('Me', () => {
 			source: MeQuery,
 			token: token ? token : '',
 		})
-		console.log(response)
 		expect(response.data).toBeDefined()
 	})
 })
