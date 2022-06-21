@@ -3,3 +3,4 @@
 
 yarn types
 yarn lint
+yarn test
