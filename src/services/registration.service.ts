@@ -1,8 +1,9 @@
-import {RegistrationResponse} from '../responses'
+import {RegistrationResponse, RegistrationsResponse} from '../responses'
 import {RegistrationInput} from '../inputs'
 import {RegistrationModel} from '../schema'
 import {newRegistrationEmail, paymentNeededEmail} from '../utils'
-import {ErrorConstants} from 'src/constants'
+import {ErrorConstants} from '../constants'
+import {Sorting} from '../types'
 
 class RegistrationService {
 	async addRegisteration(
@@ -36,6 +37,25 @@ class RegistrationService {
 		return {
 			errors: [],
 			registration,
+		}
+	}
+	async getAllRegistrations(sorting: Sorting): Promise<RegistrationsResponse> {
+		const registrations = await RegistrationModel.find().sort({
+			createdAt: sorting === Sorting.ASC ? 1 : -1,
+		})
+		if (!registrations) {
+			return {
+				errors: [
+					{
+						...ErrorConstants['INTERNAL_SERVER_ERROR'],
+					},
+				],
+				registrations: null,
+			}
+		}
+		return {
+			errors: [],
+			registrations,
 		}
 	}
 }

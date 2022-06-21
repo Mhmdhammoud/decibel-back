@@ -6,12 +6,13 @@ import {
 	ApolloServerPluginLandingPageGraphQLPlayground,
 	ApolloServerPluginLandingPageProductionDefault,
 } from 'apollo-server-core'
-// import {IContext} from './types'
+import {IContext} from './types'
 import {ConnectDb, Logger} from './lib'
-import {createSchema} from './utils'
+import {createSchema, verifyJwt} from './utils'
 import {graphqlUploadExpress} from 'graphql-upload'
-// import {User} from './users'
+import {Admin} from './schema'
 import {existsSync, mkdir} from 'fs'
+import {AUTHORIZATION_KEY} from './constants'
 ;(async function () {
 	const app = express()
 	dotenv.config()
@@ -30,16 +31,15 @@ import {existsSync, mkdir} from 'fs'
 	const schema = await createSchema()
 	const server = new ApolloServer({
 		schema,
-		// context: (ctx: IContext) => {
-		//     const context = ctx
-		//     const fullToken = ctx.req.headers['authorization']
-		//     if (fullToken) {
-		//         const token = fullToken.slice(7, fullToken.length).trimLeft()
-		//         context.user = verifyJwt<User>(token)
-		//     }
-		//     return context
-		// }
-		context: (ctx) => ctx,
+		context: (ctx: IContext) => {
+			const context = ctx
+			const fullToken = ctx.req.headers['authorization']
+			if (fullToken) {
+				const token = fullToken.split(AUTHORIZATION_KEY)[1]
+				context.admin = verifyJwt<Admin>(token)
+			}
+			return context
+		},
 		plugins: [
 			process.env.NODE_ENV === 'production'
 				? ApolloServerPluginLandingPageProductionDefault()
