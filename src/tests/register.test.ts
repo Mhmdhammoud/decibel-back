@@ -6,13 +6,13 @@ import {gCall,testDbConnection} from '../test-utils'
 beforeAll(async () => {
 	await testDbConnection()
 })
-afterAll(async () => {
-	await (await testDbConnection()).connection.dropCollection('admins')
-	await (await testDbConnection()).connection.close(true)
-})
+// afterAll(async () => {
+// 	await (await testDbConnection()).connection.dropCollection('admins')
+// 	await (await testDbConnection()).connection.close(true)
+// })
 
-describe('Create User', () => {
-	it('Check if user exists', async () => {
+describe('Create Admin', () => {
+	it('Check if admin exists', async () => {
 		const userPayload = {
 			email: faker.internet.email(),
 			password: faker.internet.password(),
