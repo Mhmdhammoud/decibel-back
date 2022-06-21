@@ -22,7 +22,7 @@ import exceljs from 'exceljs'
 import moment from 'moment'
 import {countries} from '../data'
 import UtilitiesService from './utilities.service'
-
+import {unlinkSync} from 'fs'
 class RegistrationService {
 	utilitiesSerivce: UtilitiesService
 	constructor() {
@@ -180,6 +180,7 @@ class RegistrationService {
 			localDirectory,
 			bucketDir
 		)
+		unlinkSync(localDirectory)
 		if (data.errors && data.errors?.length > 0) {
 			return {
 				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
