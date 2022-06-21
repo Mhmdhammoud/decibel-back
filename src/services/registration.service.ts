@@ -2,7 +2,7 @@ import {RegistrationResponse} from '../responses'
 import {RegistrationInput} from '../inputs'
 import {RegistrationModel} from '../schema'
 import {newRegistrationEmail, paymentNeededEmail} from '../utils'
-import {ErrorConstants} from 'src/constants'
+import {ErrorConstants} from '../constants'
 
 class RegistrationService {
 	async addRegisteration(
