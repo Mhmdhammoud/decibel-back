@@ -49,7 +49,6 @@ export class Contact {
 	@Field(() => String)
 	@IsEmail()
 	@prop({
-		unique: true,
 		lowercase: true,
 		trim: true,
 	})
