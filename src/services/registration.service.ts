@@ -2,6 +2,7 @@ import {RegistrationResponse} from '../responses'
 import {RegistrationInput} from '../inputs'
 import {RegistrationModel} from '../schema'
 import {newRegistrationEmail, paymentNeededEmail} from '../utils'
+import {ErrorConstants} from 'src/constants'
 
 class RegistrationService {
 	async addRegisteration(
@@ -24,9 +25,7 @@ class RegistrationService {
 			return {
 				errors: [
 					{
-						field: 'Internal Server Error',
-						message:
-							'Something went wrong please contact system administrator.',
+						...ErrorConstants['INTERNAL_SERVER_ERROR'],
 					},
 				],
 				registration: null,

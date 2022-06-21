@@ -1,4 +1,5 @@
 import {Request, Response} from 'express'
+import {Admin} from '../schema'
 
 interface IRequest extends Request {
 	headers: {
@@ -12,5 +13,5 @@ interface IRequest extends Request {
 export interface IContext {
 	req: IRequest
 	res: Response
-	user: {} | null
+	admin: Admin | null
 }

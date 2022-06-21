@@ -1,58 +1,52 @@
 import {
 	getModelForClass,
 	index,
+	pre,
 	prop,
 	queryMethod,
 	ReturnModelType,
 } from '@typegoose/typegoose'
 import {AsQueryMethod} from '@typegoose/typegoose/lib/types'
+import * as bcrypt from 'bcryptjs'
 import {IsEmail} from 'class-validator'
-import {Field, ID, ObjectType, registerEnumType} from 'type-graphql'
-import {Alphabets, RegistrantType, Sorting} from '../types'
+import {Field, ID, ObjectType} from 'type-graphql'
+import {Alphabets} from '../types'
 import {idGenerator} from '../utils'
 
-function findByRegistrationId(
-	this: ReturnModelType<typeof Registration, QueryHelpers>,
-	registration_id: Registration['registration_id']
+function findByAdminId(
+	this: ReturnModelType<typeof Admin, QueryHelpers>,
+	admin_id: Admin['admin_id']
 ) {
-	return this.findOne({registration_id})
+	return this.findOne({admin_id})
 }
 
 function findByEmail(
-	this: ReturnModelType<typeof Registration, QueryHelpers>,
-	email: Registration['email']
+	this: ReturnModelType<typeof Admin, QueryHelpers>,
+	email: Admin['email']
 ) {
 	return this.findOne({email})
 }
 
 interface QueryHelpers {
 	findByEmail: AsQueryMethod<typeof findByEmail>
-	findByRegistrationId: AsQueryMethod<typeof findByRegistrationId>
+	findByAdminId: AsQueryMethod<typeof findByAdminId>
 }
 
-registerEnumType(Sorting, {
-	name: 'Sorting',
+@pre<Admin>('save', async function (next) {
+	if (!this.isModified('password')) {
+		return
+	}
+	const salt = await bcrypt.genSalt(10)
+	this.password = await bcrypt.hash(this.password, salt)
+	next()
 })
-
-registerEnumType(RegistrantType, {
-	name: 'RegistrantType',
-})
-
 @queryMethod(findByEmail)
-@queryMethod(findByRegistrationId)
-@index({user_id: 1})
+@queryMethod(findByAdminId)
+@index({admin_id: 1})
 @ObjectType()
-export class Registration {
+export class Admin {
 	@Field(() => ID)
 	_id: string
-
-	@Field(() => String)
-	@prop({trim: true})
-	fname: string
-
-	@Field(() => String)
-	@prop({trim: true})
-	lname: string
 
 	@Field(() => String)
 	@IsEmail()
@@ -62,6 +56,9 @@ export class Registration {
 		trim: true,
 	})
 	email: string
+
+	@prop()
+	password: string
 
 	@Field(() => String)
 	@prop({
@@ -78,13 +75,10 @@ export class Registration {
 	updatedAt: Date
 }
 
-export default getModelForClass<typeof Registration, QueryHelpers>(
-	Registration,
-	{
-		schemaOptions: {
-			versionKey: false,
-			timestamps: true,
-			minimize: false,
-		},
-	}
-)
+export default getModelForClass<typeof Admin, QueryHelpers>(Admin, {
+	schemaOptions: {
+		versionKey: false,
+		timestamps: true,
+		minimize: false,
+	},
+})

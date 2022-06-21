@@ -1,10 +1,10 @@
 import {AuthChecker} from '.'
 import {buildSchema} from 'type-graphql'
 import {GraphQLSchema} from 'graphql'
-import {RegistrationResolver} from '../resolvers'
+import {AdminResolver, RegistrationResolver} from '../resolvers'
 
 const createSchema = async (): Promise<GraphQLSchema> => {
-	const resolvers = [RegistrationResolver] as const
+	const resolvers = [RegistrationResolver, AdminResolver] as const
 
 	return buildSchema({
 		resolvers,
