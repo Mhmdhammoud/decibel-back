@@ -17,8 +17,20 @@ jobs:
         run: yarn
       - name: Run types test
         run: yarn types
-  deploy:
+  schema-testing:
     needs: [type-check]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code.
+        uses: actions/checkout@v2
+      - name: Install Node. js.
+        uses: bahmutov/npm-install@v1
+        with:
+          node-version: '16.13.1'
+      - name: Testing GraphQL queries & mutations
+        run: yarn test
+  deploy:
+    needs: [schema-testing]
     runs-on: ubuntu-latest
     steps:
       - name: SSH Remote
