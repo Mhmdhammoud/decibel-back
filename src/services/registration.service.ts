@@ -70,11 +70,7 @@ class RegistrationService {
 		)
 		if (!updatedRegistration) {
 			return {
-				errors: [
-					{
-						...ErrorConstants['INTERNAL_SERVER_ERROR'],
-					},
-				],
+				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
 				registration: null,
 			}
 		}
