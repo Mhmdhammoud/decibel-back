@@ -8,11 +8,6 @@ import {MeQuery} from '../graphql'
 beforeAll(async () => {
 	await testDbConnection()
 })
-
-// afterAll(async () => {
-// 	await (await testDbConnection()).connection.dropCollection('admins')
-// 	await (await testDbConnection()).connection.close(true)
-// })
 describe('Me', () => {
 	it('get admin', async () => {
 		const userService = new AdminService()

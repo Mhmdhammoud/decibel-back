@@ -4,7 +4,6 @@ import {Logger} from '../lib'
 export default async function testDbConnection() {
 	try {
 		const mongoUri = process.env.TEST_MONGO_URI
-		console.log(mongoUri)
 		if (!mongoUri) {
 			Logger.error(
 				'mongoose',
