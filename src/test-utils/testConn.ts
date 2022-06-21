@@ -6,13 +6,15 @@ export default async function testDbConnection() {
 		const mongoUri = process.env.TEST_MONGO_URI
 		console.log(mongoUri)
 		if (!mongoUri) {
-			Logger.error(
-				'mongoose',
-				'connecToDb',
-				'Mongo uri was not found',
-				'localhost'
-			)
-			process.exit(1)
+			console.log(mongoUri)
+			console.log('asdmaslkdmnasdnajksdnakjsdnakjsdnakjsnd')
+			// Logger.error(
+			// 	'mongoose',
+			// 	'connecToDb',
+			// 	'Mongo uri was not found',
+			// 	'localhost'
+			// )
+			// process.exit(1)
 		}
 		const connection = await mongoose.connect(mongoUri)
 		Logger.info(
