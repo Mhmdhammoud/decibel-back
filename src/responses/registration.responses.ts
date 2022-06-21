@@ -12,4 +12,11 @@ export class RegistrationResponse extends BasicError {
 export class RegistrationsResponse extends BasicError {
 	@Field(() => [Registration], {nullable: true})
 	registrations: Registration[] | null
+	@Field(() => String, {nullable: true})
+	link: string | null
+}
+@ObjectType()
+export class RegistrationsData extends BasicError {
+	@Field(() => String, {nullable: true})
+	link: string | null
 }
