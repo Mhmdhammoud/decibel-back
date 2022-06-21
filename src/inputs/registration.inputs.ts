@@ -10,23 +10,23 @@ export class RegistrationInput {
 	@Field(() => String)
 	lname: string
 
-	@Field(() => String, {nullable: true})
+	@Field(() => String)
 	phone: string
 
-	@Field(() => String, {nullable: true})
+	@Field(() => String)
 	nationality: String
 
-	@Field(() => String, {nullable: true})
+	@Field(() => String)
 	country_of_residence: String
 
 	@Field(() => String)
 	@IsEmail()
 	email: string
 
-	@Field(() => Date, {nullable: true})
+	@Field(() => Date)
 	date_of_birth: Date
 
-	@Field(() => RegistrantType, {nullable: true})
+	@Field(() => RegistrantType)
 	registrant_type: RegistrantType
 
 	@Field(() => String, {nullable: true})
