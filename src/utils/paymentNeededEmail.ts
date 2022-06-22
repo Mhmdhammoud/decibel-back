@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer'
+import {Logger} from '../lib'
 
 /**
  * @remarks
@@ -341,12 +342,12 @@ const sendEmail = (email: string) => {
 		// send mail with defined transport object
 		transporter.sendMail(mailOptions, (error, info) => {
 			if (error) {
-				return console.log(error)
+				Logger.error('paymentNeededEmail','sendEmail',error.message,'localhost',error)
 			}
-			console.log('Message sent: %s', info.messageId)
+			Logger.info('paymentNeededEmail','sendEmail',`Message sent: ${info.messageId}`,'localhost')
 		})
 	} catch (error) {
-		return console.log(error)
+		Logger.error('paymentNeededEmail','sendEmail',error.message,'localhost',error)
 	}
 }
 export default sendEmail
