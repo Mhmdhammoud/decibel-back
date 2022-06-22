@@ -10,6 +10,7 @@ import {RegistrationService} from '../services'
 import {RegistrationInput} from '../inputs'
 import {RegistrantType, Sorting} from '../types'
 import moment from 'moment'
+import {ErrorConstants} from '../constants'
 
 beforeAll(async () => {
 	await testDbConnection()
@@ -120,9 +121,7 @@ describe('Registration', () => {
 		})
 		expect(toggleActivateRegistrationResponse?.errors).toBeDefined()
 		//@ts-ignore
-		expect(toggleActivateRegistrationResponse?.errors[0].message).toContain('Access' +
-			' denied! You' +
-			' need to be authorized to perform this action!')
+		expect(toggleActivateRegistrationResponse?.errors[0].message).toContain(ErrorConstants['UNAUTHORIZED'].message)
 		const adminPayload = {
 			email: faker.internet.email(),
 			password: faker.internet.password(),

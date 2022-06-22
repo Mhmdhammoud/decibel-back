@@ -1,4 +1,4 @@
-import {S3Client} from '../lib'
+import {Logger, S3Client} from '../lib'
 import {readFile} from 'fs'
 import {UploadResponse} from '../common'
 import {S3 as AmazonS3} from 'aws-sdk'
@@ -11,7 +11,7 @@ class UtilitiesService {
 		return new Promise((resolve, reject) => {
 			readFile(localDir, async (err, data) => {
 				if (err) {
-					console.log(err)
+					Logger.error('utilitiesService','uploadLocalFile',err.message,'localhost',err)
 					return reject({
 						errors: [
 							{

@@ -1,4 +1,4 @@
-import {Arg, Mutation, Query, Resolver} from 'type-graphql'
+import {Arg, Authorized, Mutation, Query, Resolver} from 'type-graphql'
 import {ContactInput} from '../inputs'
 import {AddContactsResponse, ContactsResponse} from '../responses'
 import {ContactService} from '../services'
@@ -15,6 +15,7 @@ class ContactResolver {
 	): Promise<AddContactsResponse> {
 		return this.contactService.addContact(input)
 	}
+	@Authorized()
 	@Query(() => ContactsResponse)
 	async getAllContacts(
 		@Arg('sorting', () => Sorting) sorting: Sorting
