@@ -19,5 +19,11 @@ const ErrorConstants = {
 		field: 'registration_id',
 		message: 'Invalid registration id format, expected ObjectId',
 	},
+	UNAUTHORIZED:{
+		field: 'unauthorized',
+		message: 'Access' +
+			' denied! You' +
+			' need to be authorized to perform this action!',
+	}
 }
 export default ErrorConstants
