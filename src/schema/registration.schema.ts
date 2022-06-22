@@ -1,6 +1,6 @@
 import {
 	getModelForClass,
-	index,
+	index, pre,
 	prop,
 	queryMethod,
 	ReturnModelType,
@@ -36,6 +36,20 @@ registerEnumType(Sorting, {
 
 registerEnumType(RegistrantType, {
 	name: 'RegistrantType',
+})
+
+@pre<Registration>('save', async function (next) {
+	//@ts-ignore
+	this.fname = this.fname
+		.split(' ')
+		.map((val: string) => val.charAt(0).toUpperCase() + val.slice(1))
+		.join(' ')
+	//@ts-ignore
+	this.lname = this.lname
+		.split(' ')
+		.map((val: string) => val.charAt(0).toUpperCase() + val.slice(1))
+		.join(' ')
+	next()
 })
 
 @queryMethod(findByEmail)

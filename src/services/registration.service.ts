@@ -55,10 +55,16 @@ class RegistrationService {
 			registration,
 		}
 	}
+	async getRegistration(registration_id: string): Promise<RegistrationResponse> {
+		return {
+			errors:[],
+			registration: await RegistrationModel.find().findByRegistrationId(registration_id).lean(),
+		}
+	}
 	async getAllRegistrations(sorting: Sorting): Promise<RegistrationsResponse> {
 		const registrations = await RegistrationModel.find().sort({
 			createdAt: sorting === Sorting.ASC ? 1 : -1,
-		})
+		}).lean()
 		if (!registrations) {
 			return {
 				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
