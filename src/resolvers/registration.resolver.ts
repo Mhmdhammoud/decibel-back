@@ -25,6 +25,12 @@ class RegistrationResolver {
 	): Promise<RegistrationsResponse> {
 		return this.registationService.getAllRegistrations(sorting)
 	}
+	@Query(() => RegistrationResponse)
+	async getRegistrations(
+		@Arg('registration_id', () => ID) registration_id: string
+	): Promise<RegistrationResponse> {
+		return this.registationService.getRegistration(registration_id)
+	}
 	@Authorized()
 	@Mutation(() => RegistrationResponse)
 	async toggleActivateRegistration(
