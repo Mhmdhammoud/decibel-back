@@ -1,2 +1,8 @@
 export {default as MeQuery} from './queries/me'
 export {default as CreateAdmin} from './mutations/create-admin'
+export {default as Login}from './mutations/login'
+export {default as AddRegisteration}from './mutations/add-registration'
+export {default as GetAllRegistrations}from './queries/get-all-registrations'
+export {default as GetSingleRegistration}from './queries/get-single-registration'
+export {default as ToggleActivateRegistration}from './mutations/toggle-activate-registration'
+export {default as ExportData}from './queries/export-data'

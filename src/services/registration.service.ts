@@ -23,13 +23,16 @@ import moment from 'moment'
 import {countries} from '../data'
 import UtilitiesService from './utilities.service'
 import {unlinkSync} from 'fs'
+
 class RegistrationService {
 	utilitiesSerivce: UtilitiesService
+
 	constructor() {
 		this.utilitiesSerivce = new UtilitiesService()
 	}
+
 	async addRegisteration(
-		input: RegistrationInput
+		input: RegistrationInput,
 	): Promise<RegistrationResponse> {
 		const isFound = await RegistrationModel.find().findByEmail(input.email)
 		if (isFound) {
@@ -40,7 +43,7 @@ class RegistrationService {
 		}
 		const registration_created = await RegistrationModel.create(input)
 		const registration = await RegistrationModel.findById(
-			registration_created._id
+			registration_created._id,
 		).lean()
 		if (!registration) {
 			return {
@@ -48,19 +51,21 @@ class RegistrationService {
 				registration: null,
 			}
 		}
-		newRegistrationEmail()
-		paymentNeededEmail(registration.email)
+		process.env.NODE_ENV !== 'test' && newRegistrationEmail()
+		process.env.NODE_ENV !== 'test' && paymentNeededEmail(registration.email)
 		return {
 			errors: [],
 			registration,
 		}
 	}
+
 	async getRegistration(registration_id: string): Promise<RegistrationResponse> {
 		return {
-			errors:[],
+			errors: [],
 			registration: await RegistrationModel.find().findByRegistrationId(registration_id).lean(),
 		}
 	}
+
 	async getAllRegistrations(sorting: Sorting): Promise<RegistrationsResponse> {
 		const registrations = await RegistrationModel.find().sort({
 			createdAt: sorting === Sorting.ASC ? 1 : -1,
@@ -87,8 +92,9 @@ class RegistrationService {
 			link,
 		}
 	}
+
 	async toggleActivateRegistration(
-		registration_id: string
+		registration_id: string,
 	): Promise<RegistrationResponse> {
 		if (!mongoose.isValidObjectId(registration_id)) {
 			return {
@@ -109,7 +115,7 @@ class RegistrationService {
 				$set: {
 					status: !registration.status,
 				},
-			}
+			},
 		)
 
 		if (!registrationUpdate) {
@@ -119,7 +125,7 @@ class RegistrationService {
 			}
 		}
 		const updatedRegistration = await RegistrationModel.findById(
-			registration_id
+			registration_id,
 		).lean()
 		if (!updatedRegistration) {
 			return {
@@ -127,12 +133,13 @@ class RegistrationService {
 				registration: null,
 			}
 		}
-		registrationActivatedEmail(updatedRegistration.email)
+		process.env.NODE_ENV !== 'test' && registrationActivatedEmail(updatedRegistration.email)
 		return {
 			errors: [],
 			registration: updatedRegistration,
 		}
 	}
+
 	async exportData(): Promise<RegistrationsData> {
 		const registrations = await RegistrationModel.find()
 		if (!registrations) {
@@ -169,7 +176,7 @@ class RegistrationService {
 				nationality: countries.find((el) => el.code === item.nationality)
 					?.label,
 				country_of_residence: countries.find(
-					(el) => el.code === item.country_of_residence
+					(el) => el.code === item.country_of_residence,
 				)?.label,
 				registrant_type: item.registrant_type?.toUpperFirst(),
 				university: item.university?.toUpperFirst(),
@@ -184,7 +191,7 @@ class RegistrationService {
 		const bucketDir = `decibel/reports/registrations.xlsx`
 		const data = await this.utilitiesSerivce.uploadLocalFile(
 			localDirectory,
-			bucketDir
+			bucketDir,
 		)
 		unlinkSync(localDirectory)
 		if (data.errors && data.errors?.length > 0) {
@@ -199,4 +206,5 @@ class RegistrationService {
 		}
 	}
 }
+
 export default RegistrationService
