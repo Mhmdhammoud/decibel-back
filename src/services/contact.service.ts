@@ -21,7 +21,7 @@ class ContactService {
 	async getAllContacts(sorting: Sorting): Promise<ContactsResponse> {
 		const contacts = await ContactModel.find().sort({
 			createdAt: sorting === Sorting.ASC ? 1 : -1,
-		})
+		}).lean()
 		if (!contacts) {
 			return {
 				errors: [ErrorConstants['INTERNAL_SERVER_ERROR']],
