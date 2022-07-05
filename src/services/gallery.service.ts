@@ -7,8 +7,7 @@ import {ErrorConstants} from '../constants'
 import {Gallery} from '../schema'
 
 class GalleryService {
-	fileDir = path.join(__dirname, '../constants/gallery.json')
-
+	fileDir = path.join(__dirname, '../../gallery.json')
 	async addImg(input: AddImageGalleryInput): Promise<boolean> {
 		return new Promise((resolve, reject) => {
 			fs.readFile(this.fileDir,
@@ -40,6 +39,7 @@ class GalleryService {
 	}
 
 	async getAllImgs(): Promise<GalleryResponse> {
+		console.log(this.fileDir)
 		return new Promise((resolve, reject) => {
 			fs.readFile(this.fileDir,
 				{encoding: 'utf8', flag: 'r'},
