@@ -60,6 +60,37 @@ class GalleryService {
 				})
 		})
 	}
+
+	async deleteImg(input: string): Promise<boolean> {
+		return new Promise((resolve, reject) => {
+			fs.readFile(this.fileDir,
+				{encoding: 'utf8', flag: 'r'},
+				(err, data) => {
+					if (err) {
+						Logger.error('GalleryService', 'addImg', err.message, 'localhost', err)
+						return reject(false)
+					} else {
+						const oldData = JSON.parse(data)
+						const filteredData = oldData.filter((item: Gallery) => {
+							return item.src !== input
+						})
+						return fs.writeFile(this.fileDir, JSON.stringify(filteredData), {
+							encoding: 'utf8',
+							flag: 'w',
+							//@ts-ignore
+							// eslint-disable-next-line @typescript-eslint/no-unused-vars
+						}, (err, _) => {
+							if (err) {
+								Logger.error('GalleryService', 'addImg', err.message, 'localhost', err)
+								return reject(false)
+							} else {
+								return resolve(true)
+							}
+						})
+					}
+				})
+		})
+	}
 }
 
 export default GalleryService

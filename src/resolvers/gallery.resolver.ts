@@ -17,6 +17,14 @@ class GalleryResolver {
 		return this.galleryService.addImg(input)
 	}
 
+	@Authorized()
+	@Mutation(() => Boolean)
+	async deleteImg(
+		@Arg('input', () => String) input: string,
+	): Promise<boolean> {
+		return this.galleryService.deleteImg(input)
+	}
+
 	@Query(() => GalleryResponse)
 	async getAllImgs(): Promise<GalleryResponse> {
 		return this.galleryService.getAllImgs()
