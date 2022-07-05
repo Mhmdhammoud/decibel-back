@@ -4,7 +4,7 @@ import {GraphQLSchema} from 'graphql'
 import {
 	AdminResolver,
 	ContactsResolver, GalleryResolver,
-	RegistrationResolver,
+	RegistrationResolver, UtilitiesResolver,
 } from '../resolvers'
 
 const createSchema = async (): Promise<GraphQLSchema> => {
@@ -13,6 +13,7 @@ const createSchema = async (): Promise<GraphQLSchema> => {
 		AdminResolver,
 		ContactsResolver,
 		GalleryResolver,
+		UtilitiesResolver,
 	] as const
 
 	return buildSchema({
