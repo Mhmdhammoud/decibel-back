@@ -2,7 +2,7 @@ import {createWriteStream, readFile} from 'fs'
 import {IUpload} from '../types'
 import {S3 as AmazonS3} from 'aws-sdk'
 import {Logger, S3Client} from '../lib'
-import {UploadResponse} from '../resolvers/utils.resolver'
+import {UploadResponse} from '../responses'
 
 class UtilsService {
 	async uploadLocalFile(
