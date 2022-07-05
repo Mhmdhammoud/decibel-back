@@ -1,26 +1,22 @@
 [
   {
+    "id": 1,
     "src": "https://source.unsplash.com/random",
-    "alt": ""
+    "alt": "random image"
   },
   {
+    "id": 2,
     "src": "https://source.unsplash.com/random",
-    "alt": ""
+    "alt": "random image"
   },
   {
+    "id": 3,
     "src": "https://source.unsplash.com/random",
-    "alt": ""
+    "alt": "random image"
   },
   {
+    "id": 4,
     "src": "https://source.unsplash.com/random",
-    "alt": ""
-  },
-  {
-    "img": "https://source.unsplash.com/random",
-    "alt": ""
-  },
-  {
-    "img": "https://i.ytimg.com/vi/QH2-TGUlwu4/maxresdefault.jpg",
-    "alt": ""
+    "alt": "random image"
   }
 ]
