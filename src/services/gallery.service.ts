@@ -8,6 +8,7 @@ import {Gallery} from '../schema'
 
 class GalleryService {
 	fileDir = path.join(__dirname, '../../gallery.json')
+
 	async addImg(input: AddImageGalleryInput): Promise<boolean> {
 		return new Promise((resolve, reject) => {
 			fs.readFile(this.fileDir,
@@ -18,7 +19,7 @@ class GalleryService {
 						return reject(false)
 					} else {
 						const oldData = JSON.parse(data)
-						const newObject = {img: input.img, alt: input.alt}
+						const newObject: Gallery = {src: input.img, alt: input.alt}
 						oldData.push(newObject)
 						return fs.writeFile(this.fileDir, JSON.stringify(oldData), {
 							encoding: 'utf8',
