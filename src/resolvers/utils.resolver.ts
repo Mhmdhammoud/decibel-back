@@ -1,24 +1,9 @@
 import {GraphQLUpload} from 'graphql-upload'
-import {
-	Arg,
-	Authorized,
-	Field,
-	Mutation,
-	ObjectType,
-	Resolver,
-} from 'type-graphql'
+import {Arg, Authorized, Mutation, Resolver} from 'type-graphql'
 import {UtilsService} from '../services'
 import {IUpload} from '../types'
-import FieldErrorResponse from '../common/FieldErrorResponse'
+import {UploadResponse} from '../responses'
 
-@ObjectType()
-export class UploadResponse {
-	@Field(() => [FieldErrorResponse], {nullable: true})
-	errors?: FieldErrorResponse[]
-
-	@Field(() => String, {nullable: true})
-	file?: string | null
-}
 
 @Resolver()
 class UtilsResolver {
