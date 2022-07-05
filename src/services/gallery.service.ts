@@ -5,6 +5,8 @@ import {Logger} from '../lib'
 import {GalleryResponse} from '../responses/gallery.responses'
 import {ErrorConstants} from '../constants'
 import {Gallery} from '../schema'
+import {idGenerator} from '../utils'
+import {Alphabets} from '../types'
 
 class GalleryService {
 	fileDir = path.join(__dirname, '../../gallery.json')
@@ -19,7 +21,11 @@ class GalleryService {
 						return reject(false)
 					} else {
 						const oldData = JSON.parse(data)
-						const newObject: Gallery = {src: input.img, alt: input.alt}
+						const newObject: Gallery = {
+							src: input.img,
+							alt: input.alt,
+							id: `image_${idGenerator(Alphabets.ALPHANUMERIC, 4)}`,
+						}
 						oldData.push(newObject)
 						return fs.writeFile(this.fileDir, JSON.stringify(oldData), {
 							encoding: 'utf8',
@@ -73,7 +79,7 @@ class GalleryService {
 					} else {
 						const oldData = JSON.parse(data)
 						const filteredData = oldData.filter((item: Gallery) => {
-							return item.src !== input
+							return item?.id !== input
 						})
 						return fs.writeFile(this.fileDir, JSON.stringify(filteredData), {
 							encoding: 'utf8',

@@ -1,4 +1,4 @@
-import {Arg, Authorized, Mutation, Query, Resolver} from 'type-graphql'
+import {Arg, Authorized, ID, Mutation, Query, Resolver} from 'type-graphql'
 import {AddImageGalleryInput} from '../inputs'
 import {GalleryService} from '../services'
 import {GalleryResponse} from '../responses/gallery.responses'
@@ -20,7 +20,7 @@ class GalleryResolver {
 	@Authorized()
 	@Mutation(() => Boolean)
 	async deleteImg(
-		@Arg('input', () => String) input: string,
+		@Arg('input', () => ID) input: string,
 	): Promise<boolean> {
 		return this.galleryService.deleteImg(input)
 	}

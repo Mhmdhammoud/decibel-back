@@ -1,7 +1,10 @@
-import {Field, ObjectType} from 'type-graphql'
+import {Field, ID, ObjectType} from 'type-graphql'
 
 @ObjectType()
 class Gallery {
+	@Field(() => ID, {nullable: true})
+	id: string
+
 	@Field(() => String, {nullable: true})
 	src: string
 
