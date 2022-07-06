@@ -28,6 +28,28 @@ import {AUTHORIZATION_KEY} from './constants'
 			)
 		)
 	}
+	if (!existsSync('assets')) {
+		mkdir('assets', (err) =>
+			Logger.error(
+				'index level',
+				'bootstrap',
+				err?.message as string,
+				'localhost',
+				err as Object
+			)
+		)
+		if (!existsSync('assets/images')) {
+			mkdir('assets/images', (err) =>
+				Logger.error(
+					'index level',
+					'bootstrap',
+					err?.message as string,
+					'localhost',
+					err as Object
+				)
+			)
+		}
+	}
 	const schema = await createSchema()
 	const server = new ApolloServer({
 		schema,
