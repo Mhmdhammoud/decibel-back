@@ -1,4 +1,4 @@
-import {Authorized, Query, Resolver} from 'type-graphql'
+import {Query, Resolver} from 'type-graphql'
 import {AllHearingAidsResponse} from '../responses'
 import {HearingAid} from '../schema'
 import {HearingAidsService} from '../services'
@@ -9,7 +9,6 @@ class HearingAidsResolver {
 		this.hearingAidsService = new HearingAidsService()
 	}
 
-	@Authorized()
 	@Query(() => AllHearingAidsResponse)
 	async getAllHearingAids(): Promise<AllHearingAidsResponse> {
 		return this.hearingAidsService.getAllHearingAids()
