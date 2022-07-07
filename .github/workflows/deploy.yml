@@ -31,7 +31,9 @@ jobs:
           port: 22
           script: |
             cd ${{secrets.DIRECTORY}}
+            sudo git stash
             sudo git pull origin master
             sudo yarn
             sudo yarn build
+            sudo git stash apply
             sudo pm2 restart all
