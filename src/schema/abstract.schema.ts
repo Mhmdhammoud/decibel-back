@@ -1,5 +1,5 @@
-import {Field, ID} from 'type-graphql'
-
+import {Field, ID, ObjectType} from 'type-graphql'
+@ObjectType()
 export abstract class AbstractSchema {
 	@Field(() => ID)
 	_id: string

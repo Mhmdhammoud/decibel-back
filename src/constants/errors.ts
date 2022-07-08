@@ -16,14 +16,15 @@ const ErrorConstants = {
 		message: 'Registration with the email is already used',
 	},
 	INVALID_ID: {
-		field: 'registration_id',
+		field: 'id',
 		message: 'Invalid registration id format, expected ObjectId',
 	},
-	UNAUTHORIZED:{
+	UNAUTHORIZED: {
 		field: 'unauthorized',
-		message: 'Access' +
+		message:
+			'Access' +
 			' denied! You' +
 			' need to be authorized to perform this action!',
-	}
+	},
 }
 export default ErrorConstants
