@@ -5,10 +5,11 @@ import {
 	queryMethod,
 	ReturnModelType,
 } from '@typegoose/typegoose'
+import {AsQueryMethod} from '@typegoose/typegoose/lib/types'
+import {Field, ObjectType} from 'type-graphql'
 import {Alphabets} from '../types'
 import {idGenerator} from '../utils'
-import {Field, ID, ObjectType} from 'type-graphql'
-import {AsQueryMethod} from '@typegoose/typegoose/lib/types'
+import {AbstractSchema} from './abstract.schema'
 
 function findByGalleryId(
 	this: ReturnModelType<typeof Gallery, QueryHelpers>,
@@ -22,10 +23,7 @@ interface QueryHelpers {
 @queryMethod(findByGalleryId)
 @index({gallery_id: 1})
 @ObjectType()
-export class Gallery {
-	@Field(() => ID, {nullable: true})
-	_id: string
-
+export class Gallery extends AbstractSchema {
 	@Field(() => String, {nullable: true})
 	@prop()
 	src: string
@@ -45,12 +43,6 @@ export class Gallery {
 		unique: true,
 	})
 	gallery_id: string
-
-	@Field(() => Date)
-	createdAt: Date
-
-	@Field(() => Date)
-	updatedAt: Date
 }
 
 export default getModelForClass<typeof Gallery, QueryHelpers>(Gallery, {

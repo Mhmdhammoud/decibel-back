@@ -9,9 +9,10 @@ import {
 import {AsQueryMethod} from '@typegoose/typegoose/lib/types'
 import * as bcrypt from 'bcryptjs'
 import {IsEmail} from 'class-validator'
-import {Field, ID, ObjectType} from 'type-graphql'
+import {Field, ObjectType} from 'type-graphql'
 import {Alphabets} from '../types'
 import {idGenerator} from '../utils'
+import {AbstractSchema} from './abstract.schema'
 
 function findByAdminId(
 	this: ReturnModelType<typeof Admin, QueryHelpers>,
@@ -44,10 +45,7 @@ interface QueryHelpers {
 @queryMethod(findByAdminId)
 @index({admin_id: 1})
 @ObjectType()
-export class Admin {
-	@Field(() => ID)
-	_id: string
-
+export class Admin extends AbstractSchema {
 	@Field(() => String)
 	@IsEmail()
 	@prop({
@@ -67,12 +65,6 @@ export class Admin {
 		unique: true,
 	})
 	admin_id: string
-
-	@Field(() => Date)
-	createdAt: Date
-
-	@Field(() => Date)
-	updatedAt: Date
 }
 
 export default getModelForClass<typeof Admin, QueryHelpers>(Admin, {
