@@ -7,3 +7,4 @@ export {
 	HearingAid,
 	HearingAidOption,
 } from './phonak-hearing-aids.schema'
+export {default as CleaningModel, Cleaning} from './cleaning.schema'

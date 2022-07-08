@@ -3,6 +3,7 @@ import {buildSchema} from 'type-graphql'
 import {GraphQLSchema} from 'graphql'
 import {
 	AdminResolver,
+	CleaningResolver,
 	ContactsResolver,
 	GalleryResolver,
 	HearingAidsResolver,
@@ -18,6 +19,7 @@ const createSchema = async (): Promise<GraphQLSchema> => {
 		GalleryResolver,
 		UtilitiesResolver,
 		HearingAidsResolver,
+		CleaningResolver,
 	] as const
 
 	return buildSchema({
