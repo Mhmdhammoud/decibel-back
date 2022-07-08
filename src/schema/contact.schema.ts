@@ -7,9 +7,10 @@ import {
 } from '@typegoose/typegoose'
 import {AsQueryMethod} from '@typegoose/typegoose/lib/types'
 import {IsEmail} from 'class-validator'
-import {Field, ID, ObjectType} from 'type-graphql'
+import {Field, ObjectType} from 'type-graphql'
 import {Alphabets} from '../types'
 import {idGenerator} from '../utils'
+import {AbstractSchema} from './abstract.schema'
 
 function findByContactId(
 	this: ReturnModelType<typeof Contact, QueryHelpers>,
@@ -25,10 +26,7 @@ interface QueryHelpers {
 @queryMethod(findByContactId)
 @index({contact_id: 1})
 @ObjectType()
-export class Contact {
-	@Field(() => ID)
-	_id: string
-
+export class Contact extends AbstractSchema {
 	@Field(() => String)
 	@prop({trim: true})
 	fname: string
@@ -65,12 +63,6 @@ export class Contact {
 		unique: true,
 	})
 	contact_id: string
-
-	@Field(() => Date)
-	createdAt: Date
-
-	@Field(() => Date)
-	updatedAt: Date
 }
 
 export default getModelForClass<typeof Contact, QueryHelpers>(Contact, {

@@ -1,15 +1,17 @@
 import {
 	getModelForClass,
-	index, pre,
+	index,
+	pre,
 	prop,
 	queryMethod,
 	ReturnModelType,
 } from '@typegoose/typegoose'
 import {AsQueryMethod} from '@typegoose/typegoose/lib/types'
 import {IsEmail} from 'class-validator'
-import {Field, ID, ObjectType, registerEnumType} from 'type-graphql'
+import {Field, ObjectType, registerEnumType} from 'type-graphql'
 import {Alphabets, RegistrantType, Sorting} from '../types'
 import {idGenerator} from '../utils'
+import {AbstractSchema} from './abstract.schema'
 
 function findByRegistrationId(
 	this: ReturnModelType<typeof Registration, QueryHelpers>,
@@ -51,15 +53,11 @@ registerEnumType(RegistrantType, {
 		.join(' ')
 	next()
 })
-
 @queryMethod(findByEmail)
 @queryMethod(findByRegistrationId)
 @index({user_id: 1})
 @ObjectType()
-export class Registration {
-	@Field(() => ID)
-	_id: string
-
+export class Registration extends AbstractSchema {
 	@Field(() => String)
 	@prop({trim: true})
 	fname: string
@@ -121,12 +119,6 @@ export class Registration {
 	@Field(() => Boolean)
 	@prop({default: false})
 	status: boolean
-
-	@Field(() => Date)
-	createdAt: Date
-
-	@Field(() => Date)
-	updatedAt: Date
 }
 
 export default getModelForClass<typeof Registration, QueryHelpers>(
