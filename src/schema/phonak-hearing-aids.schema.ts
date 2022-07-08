@@ -10,6 +10,7 @@ import {
 import {AsQueryMethod} from '@typegoose/typegoose/lib/types'
 import {idGenerator} from '../utils'
 import {Alphabets} from '../types'
+import {AbstractSchema} from './abstract.schema'
 
 function findByTitle(
 	this: ReturnModelType<typeof HearingAid, QueryHelpers>,
@@ -61,10 +62,7 @@ export class HearingAidOption {
 @index({hearingAidId: 1})
 @index({title: 1})
 @ObjectType()
-export class HearingAid {
-	@Field(() => String)
-	_id: string
-
+export class HearingAid extends AbstractSchema {
 	@Field(() => String)
 	@prop()
 	title: string
@@ -88,12 +86,6 @@ export class HearingAid {
 		unique: true,
 	})
 	hearingAidId: string
-
-	@Field(() => Date)
-	createdAt: Date
-
-	@Field(() => Date)
-	updatedAt: Date
 }
 
 export default getModelForClass<typeof HearingAid, QueryHelpers>(HearingAid, {
