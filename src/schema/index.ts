@@ -8,3 +8,8 @@ export {
 	HearingAidOption,
 } from './phonak-hearing-aids.schema'
 export {default as CleaningModel, Cleaning} from './cleaning.schema'
+export {
+	default as AppoinmentModel,
+	Appointment,
+	Patient,
+} from './appointment.schema'
